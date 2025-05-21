@@ -170,7 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2, childAspectRatio: 0.7),
+                          crossAxisCount: 2, childAspectRatio: 0.65),
                       itemCount: productController.productList.length,
                       itemBuilder: (context, index) {
                         final product = productController.productList[index];

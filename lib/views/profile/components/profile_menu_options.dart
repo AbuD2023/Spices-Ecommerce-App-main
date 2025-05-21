@@ -61,7 +61,7 @@ class ProfileMenuOptions extends StatelessWidget {
                   final AuthService authService = Get.find();
                   final chack = await authService.clearData();
                   log(chack.toString(), name: 'login: ');
-                  if (chack) {
+                  if (!chack) {
                     Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(

@@ -88,7 +88,7 @@ class Items {
     productId = int.parse((json['product_id'] as String));
     quantity = int.parse((json['quantity'] as String));
     price = double.parse((json['price'] as String));
-    totalPrice = json['total_price'];
+    totalPrice =(json['total_price'] !=null)?(json['total_price'] is int)? (json['total_price'] as int).toDouble():(json['total_price'] as double).toDouble():0.0;
     product =
         json['product'] != null ? Product.fromJson(json['product']) : null;
   }
