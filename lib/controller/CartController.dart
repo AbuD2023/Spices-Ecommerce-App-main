@@ -7,6 +7,8 @@ import 'dart:convert';
 import 'package:Spices_Ecommerce_app/core/services/NotificationService.dart';
 
 class CartController extends GetxController {
+  final bool snak;
+  CartController({this.snak = true});
   var carts = <Cart>[].obs;
   var isLoading = false.obs;
   final AuthService authService = Get.find();
@@ -14,11 +16,11 @@ class CartController extends GetxController {
 
   @override
   void onInit() {
-    fetchCart();
+    fetchCart(snak: snak);
     super.onInit();
   }
 
-  Future<void> fetchCart() async {
+  Future<void> fetchCart({bool snak = true}) async {
     try {
       isLoading(true);
       final token = await authService.getToken();
@@ -44,7 +46,7 @@ class CartController extends GetxController {
       }
     } catch (e) {
       print('Error: $e');
-      notificationService.showErrorSnackbar('فشل في جلب العربة');
+      if (snak) notificationService.showErrorSnackbar('فشل في جلب العربة');
     } finally {
       isLoading(false);
     }

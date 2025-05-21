@@ -41,7 +41,11 @@ class _ProfileHeaderState extends State<ProfileHeader> {
     return Stack(
       children: [
         /// Background
-        Image.asset('assets/images/profile_page_background.png'),
+        Image.asset(
+          'assets/images/profile_page_background.png',
+          errorBuilder: (context, error, stackTrace) =>
+              const Icon(Icons.image_not_supported_outlined),
+        ),
 
         /// Content
         Column(

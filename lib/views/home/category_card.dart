@@ -32,6 +32,8 @@ class CategoryCard extends StatelessWidget {
                 width: 70,
                 height: 70,
                 fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) =>
+                    const Icon(Icons.image_not_supported_outlined),
               ),
             ),
           ),

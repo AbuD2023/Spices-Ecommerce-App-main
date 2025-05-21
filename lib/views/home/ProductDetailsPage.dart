@@ -90,7 +90,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
           fit: BoxFit.cover,
           placeholder: (context, url) =>
               const Center(child: CircularProgressIndicator()),
-          errorWidget: (context, url, error) => const Icon(Icons.error),
+          errorWidget: (context, url, error) => Image.asset(
+            'assets/images/elementor-placeholder-image.webp',
+            fit: BoxFit.cover,
+          ),
+          // errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
       ),
     );
@@ -116,7 +120,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                     color: Colors.green,
                     fontWeight: FontWeight.w600)),
             const SizedBox(height: 20),
-            Text(widget.product.description!,
+            Text(widget.product.description ?? '...',
                 style: TextStyle(fontSize: 18, color: Colors.grey[800])),
             const SizedBox(height: 30),
             Obx(() => showQuantity.value

@@ -1,7 +1,12 @@
+import 'dart:developer';
+
+import 'package:Spices_Ecommerce_app/views/auth/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../core/constants/constants.dart';
 import '../../../core/routes/app_routes.dart';
+import '../../../core/services/AuthService.dart';
 import 'profile_list_tile.dart';
 
 class ProfileMenuOptions extends StatelessWidget {
@@ -52,7 +57,18 @@ class ProfileMenuOptions extends StatelessWidget {
             ProfileListTile(
                 title: 'تسجيل الخروج ',
                 icon: AppIcons.profileLogout,
-                onTap: () {
+                onTap: () async {
+                  final AuthService authService = Get.find();
+                  final chack = await authService.clearData();
+                  log(chack.toString(), name: 'login: ');
+                  if (chack) {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginPage()),
+                      (route) => false,
+                    );
+                  }
                   // Navigator.pushNamed(context,
                 }),
           ],

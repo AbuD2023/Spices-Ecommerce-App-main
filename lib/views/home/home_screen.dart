@@ -210,6 +210,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
   void _performSearch(String query) {
     if (query.isEmpty) {
       setState(() {
@@ -232,8 +233,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildProductSearchResult(Product product) {
     return ListTile(
-      leading: Image.network(product.image!,
-          width: 60, height: 60, fit: BoxFit.cover),
+      leading: Image.network(
+        product.image!,
+        width: 60,
+        height: 60,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) =>
+            const Icon(Icons.image_not_supported_outlined),
+      ),
       title: Text(
         product.name!,
         maxLines: 1,
@@ -250,8 +257,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildCategorySearchResult(ProdCategory category) {
     return ListTile(
-      leading: Image.network(category.image!,
-          width: 60, height: 60, fit: BoxFit.cover),
+      leading: Image.network(
+        category.image!,
+        width: 60,
+        height: 60,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) =>
+            const Icon(Icons.image_not_supported_outlined),
+      ),
       title: Text(
         category.name!,
         maxLines: 1,

@@ -31,9 +31,11 @@ class AuthService {
   }
 
   // حذف البيانات (تسجيل الخروج)
-  Future<void> clearData() async {
+  Future<bool> clearData() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('token');
     await prefs.remove('user');
+    await prefs.clear();
+    return (prefs.containsKey('token') && prefs.containsKey('user'));
   }
 }

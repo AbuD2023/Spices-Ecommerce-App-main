@@ -20,10 +20,12 @@ class OrderController extends GetxController {
     super.onInit();
     fetchOrders();
   }
+
   Future<bool> hasToken() async {
     final token = await authService.getToken();
     return token != null;
   }
+
   Future<void> fetchOrders() async {
     try {
       isLoading.value = true;
@@ -66,6 +68,7 @@ class OrderController extends GetxController {
       isLoading.value = false;
     }
   }
+
   Future<void> createOrder({
     required String address,
     required String paymentMethod,
@@ -90,7 +93,7 @@ class OrderController extends GetxController {
       print('createOrder: Response status code: ${response.statusCode}');
       print('createOrder: Response body: ${response.body}');
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 201 || response.statusCode == 200) {
         await fetchOrders();
         Get.snackbar('نجاح', 'تم إنشاء الطلب بنجاح');
         Get.offAllNamed(AppRoutes.entryPoint);
@@ -109,7 +112,8 @@ class OrderController extends GetxController {
       isLoading.value = false;
     }
   }
-Future<void> applyCoupon(String code) async {
+
+  Future<void> applyCoupon(String code) async {
     try {
       isLoading.value = true;
       errorMessage.value = '';
@@ -157,7 +161,8 @@ Future<void> applyCoupon(String code) async {
       isLoading.value = false;
     }
   }
-Future<Map<String, dynamic>> validateCoupon(String code) async {
+
+  Future<Map<String, dynamic>> validateCoupon(String code) async {
     try {
       isLoading.value = true;
       errorMessage.value = '';
@@ -202,7 +207,8 @@ Future<Map<String, dynamic>> validateCoupon(String code) async {
       isLoading.value = false;
     }
   }
-Future<void> cancelOrder(orderId) async {
+
+  Future<void> cancelOrder(orderId) async {
     try {
       isLoading.value = true;
       errorMessage.value = '';
@@ -236,7 +242,8 @@ Future<void> cancelOrder(orderId) async {
       isLoading.value = false;
     }
   }
-Future<void> fetchOrderDetails( orderId) async {
+
+  Future<void> fetchOrderDetails(orderId) async {
     try {
       isLoading.value = true;
       errorMessage.value = '';

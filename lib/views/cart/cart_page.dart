@@ -2,7 +2,6 @@ import 'package:Spices_Ecommerce_app/controller/CartController.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import '../../core/components/app_back_button.dart';
 import '../../core/routes/app_routes.dart';
 import 'package:Spices_Ecommerce_app/core/components/app_bar.dart';
 
@@ -59,8 +58,18 @@ class CartPage extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: Image.network(cartItem.product.image!,
-                  width: 70, height: 70, fit: BoxFit.cover),
+              child: Image.network(
+                cartItem.product.image!,
+                width: 70,
+                height: 70,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) => Image.asset(
+                  'assets/images/elementor-placeholder-image.webp',
+                  width: 70,
+                  height: 70,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
             const SizedBox(width: 16),
             Expanded(

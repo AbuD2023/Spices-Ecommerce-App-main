@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 import 'package:Spices_Ecommerce_app/core/services/AuthService.dart';
 import 'package:flutter/material.dart';
@@ -41,8 +42,8 @@ class AuthController extends GetxController {
               'password': passwordController.text,
             }),
           )
-          .timeout(Duration(seconds: 10));
-
+          .timeout(Duration(seconds: 30));
+      log(response.body.toString());
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
         if (data['success'] == true) {
