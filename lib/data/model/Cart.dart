@@ -25,7 +25,7 @@ class Cart {
   Cart.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     subtotal = double.parse(((json['subtotal'] as num).toInt()).toString());
-    userId = int.parse((json['user_id'] as String));
+    userId = json['user_id'];
     coupon = json['coupon'];
     totalAmount = json['total_amount'];
     discountAmount = json['discount_amount'];
@@ -35,24 +35,24 @@ class Cart {
     if (json['items'] != null) {
       items = <Items>[];
       json['items'].forEach((v) {
-        items!.add(new Items.fromJson(v));
+        items!.add(Items.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['subtotal'] = this.subtotal;
-    data['user_id'] = this.userId;
-    data['coupon'] = this.coupon;
-    data['total_amount'] = this.totalAmount;
-    data['discount_amount'] = this.discountAmount;
-    data['distance'] = this.distance;
-    data['delivery_amount'] = this.deliveryAmount;
-    data['created_at'] = this.createdAt;
-    if (this.items != null) {
-      data['items'] = this.items!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['subtotal'] = subtotal;
+    data['user_id'] = userId;
+    data['coupon'] = coupon;
+    data['total_amount'] = totalAmount;
+    data['discount_amount'] = discountAmount;
+    data['distance'] = distance;
+    data['delivery_amount'] = deliveryAmount;
+    data['created_at'] = createdAt;
+    if (items != null) {
+      data['items'] = items!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -65,8 +65,8 @@ class Items {
   int? cartId;
   int? productId;
   int? quantity;
-  double? price;
-  double? totalPrice;
+  dynamic price;
+  dynamic totalPrice;
   Product? product;
 
   Items(
@@ -84,27 +84,35 @@ class Items {
     id = json['id'];
     name = json['name'];
     image = json['image'];
-    cartId = int.parse((json['cart_id'] as String));
-    productId = int.parse((json['product_id'] as String));
-    quantity = int.parse((json['quantity'] as String));
-    price = double.parse((json['price'] as String));
-    totalPrice =(json['total_price'] !=null)?(json['total_price'] is int)? (json['total_price'] as int).toDouble():(json['total_price'] as double).toDouble():0.0;
+    cartId = json['cart_id'];
+    productId = json['product_id'];
+    quantity = json['quantity'];
+    price = (json['price'] is double)
+        ? json['price'] as double
+        : (json['price'] is int)
+            ? json['price'] as int
+            : double.parse(json['price'] as String);
+    totalPrice = (json['total_price'] is double)
+        ? json['total_price'] as double
+        : (json['total_price'] is int)
+            ? json['total_price'] as int
+            : double.parse(json['total_price'] as String);
     product =
         json['product'] != null ? Product.fromJson(json['product']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['image'] = this.image;
-    data['cart_id'] = this.cartId;
-    data['product_id'] = this.productId;
-    data['quantity'] = this.quantity;
-    data['price'] = this.price;
-    data['total_price'] = this.totalPrice;
-    if (this.product != null) {
-      data['product'] = this.product!.toJson();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['image'] = image;
+    data['cart_id'] = cartId;
+    data['product_id'] = productId;
+    data['quantity'] = quantity;
+    data['price'] = price;
+    data['total_price'] = totalPrice;
+    if (product != null) {
+      data['product'] = product!.toJson();
     }
     return data;
   }
@@ -114,8 +122,8 @@ class Product {
   int? id;
   String? name;
   String? slug;
-  double? price;
-  double? salePrice;
+  dynamic price;
+  dynamic salePrice;
   int? categoryId;
   int? subCategoryId;
   String? image;
@@ -150,39 +158,47 @@ class Product {
     id = json['id'];
     name = json['name'];
     slug = json['slug'];
-    price = double.parse((json['price'] as String));
-    salePrice = double.parse((json['sale_price'] as String));
-    categoryId = int.parse((json['category_id'] as String));
-    subCategoryId = int.parse((json['sub_category_id'] as String));
+    price = (json['price'] is double)
+        ? json['price'] as double
+        : (json['price'] is int)
+            ? json['price'] as int
+            : double.parse(json['price'] as String);
+    salePrice = (json['sale_price'] is double)
+        ? json['sale_price'] as double
+        : (json['sale_price'] is int)
+            ? json['sale_price'] as int
+            : double.parse(json['sale_price'] as String);
+    categoryId = json['category_id'];
+    subCategoryId = json['sub_category_id'];
     image = json['image'];
     summary = json['summary'];
     description = json['description'];
-    unitId = int.parse((json['unit_id'] as String));
-    quantity = int.parse((json['quantity'] as String));
-    stock = int.parse((json['stock'] as String));
-    status = int.parse((json['status'] as String));
+    unitId = json['unit_id'];
+    quantity = json['quantity'];
+    stock = json['stock'];
+    status = json['status'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['slug'] = this.slug;
-    data['price'] = this.price;
-    data['sale_price'] = this.salePrice;
-    data['category_id'] = this.categoryId;
-    data['sub_category_id'] = this.subCategoryId;
-    data['image'] = this.image;
-    data['summary'] = this.summary;
-    data['description'] = this.description;
-    data['unit_id'] = this.unitId;
-    data['quantity'] = this.quantity;
-    data['stock'] = this.stock;
-    data['status'] = this.status;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['slug'] = slug;
+    data['price'] = price;
+    data['sale_price'] = salePrice;
+    data['category_id'] = categoryId;
+    data['sub_category_id'] = subCategoryId;
+    data['image'] = image;
+    data['summary'] = summary;
+    data['description'] = description;
+    data['unit_id'] = unitId;
+    data['quantity'] = quantity;
+    data['stock'] = stock;
+    data['status'] = status;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
     return data;
   }
 }

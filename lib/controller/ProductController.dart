@@ -45,6 +45,7 @@ class ProductController extends GetxController {
         print(
             'Response body fetchProducts=============================: ${response.body}');
         final data = json.decode(response.body);
+
         final productsData = data['products']['data'] as List;
         allProducts.assignAll(
             productsData.map((json) => Product.fromJson(json)).toList());

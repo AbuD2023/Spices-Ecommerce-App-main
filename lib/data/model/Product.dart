@@ -2,8 +2,8 @@ class Product {
   final int? id;
   final String? name;
   final String? slug;
-  final double? price;
-  final double? salePrice;
+  final dynamic price;
+  final int? salePrice;
   final int? subCategoryId;
   final String? image;
   final String? summary;
@@ -42,16 +42,20 @@ class Product {
       id: json['id'] as int?,
       name: json['name'] as String?,
       slug: json['slug'] as String?,
-      price: double.parse((json['price'] as String)),
-      salePrice: double.parse((json['sale_price'] as String)),
-      subCategoryId: int.parse((json['sub_category_id'] as String)),
+      price: (json['price'] is double)
+          ? json['price'] as double
+          : (json['price'] is int)
+              ? json['price'] as int
+              : double.parse(json['price'] as String),
+      salePrice: json['sale_price'] as int,
+      subCategoryId: json['sub_category_id'] as int,
       image: json['image'] as String?,
       summary: json['summary'] as String?,
       description: json['description'] as String?,
-      unitId: int.parse((json['unit_id'] as String)),
-      quantity: int.parse((json['quantity'] as String)),
-      stock: int.parse((json['stock'] as String)),
-      status: int.parse((json['status'] as String)),
+      unitId: json['unit_id'] as int,
+      quantity: json['quantity'] as int,
+      stock: json['stock'] as int,
+      status: json['status'] as int,
       createdAt: json['created_at'] as String?,
       updatedAt: json['updated_at'] as String?,
       subCategory: json['sub_category'] != null
@@ -114,7 +118,7 @@ class SubCategory {
       slug: json['slug'] as String?,
       description: json['description'] as String?,
       image: json['image'] as String?,
-      status: int.parse((json['status'] as String)),
+      status: json['status'] as int,
       createdAt: json['created_at'] as String?,
       updatedAt: json['updated_at'] as String?,
     );

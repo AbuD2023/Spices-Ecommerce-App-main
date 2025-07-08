@@ -1,3 +1,5 @@
+// import 'dart:developer';
+
 import 'package:Spices_Ecommerce_app/data/model/ProdCategory.dart';
 import 'package:Spices_Ecommerce_app/linkapi.dart';
 import 'package:get/get.dart';
@@ -37,6 +39,7 @@ class CategoryController extends GetxController {
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
+        // log(data.toString(), name: 'fetchCategories');
         final List<dynamic> categoriesJson = data['categories'];
         categoryList.assignAll(
             categoriesJson.map((json) => ProdCategory.fromJson(json)).toList());

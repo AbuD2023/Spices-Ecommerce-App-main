@@ -4,7 +4,7 @@ class ProdCategory {
   String? slug;
   String? description;
   String? image;
-  String? status;
+  int? status;
   String? createdAt;
   String? updatedAt;
 
