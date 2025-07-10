@@ -23,7 +23,14 @@ class _OrdersPageState extends State<OrdersPage> {
       appBar: buildAppBar(context, 'طلباتي',
           showBackButton: true,
           showSearchButton: false,
-          backgroundColor: const Color.fromARGB(255, 2, 191, 128)),
+          backgroundColor: const Color.fromARGB(255, 2, 191, 128),
+          actions: [
+            IconButton(
+                onPressed: () async {
+                  await orderController.fetchOrders();
+                },
+                icon: Icon(Icons.refresh))
+          ]),
       backgroundColor: Colors.grey[100],
       body: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -202,6 +209,7 @@ class _OrdersPageState extends State<OrdersPage> {
       ),
     );
   }
+
   Widget _buildOrderDetails(Order order) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),

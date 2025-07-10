@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart'; // Import shared_pr
 
 import '../../../core/components/network_image.dart';
 import '../../../core/constants/constants.dart';
+import '../../../core/services/AuthService.dart';
 import 'profile_header_options.dart';
 
 class ProfileHeader extends StatefulWidget {
@@ -17,22 +18,26 @@ class ProfileHeader extends StatefulWidget {
 
 class _ProfileHeaderState extends State<ProfileHeader> {
   String _userName = 'زائر كريم'; // Default values
-  String _userId = 'N/A000000456';
+  String _userEmail = 'N/A000000456';
   String _profileImageUrl =
       'https://images.unsplash.com/photo-1628157588553-5eeea00af15c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80';
 
   @override
   void initState() {
     super.initState();
-    _loadUserData();
+    Future.microtask(
+      () async {
+        await _loadUserData();
+      },
+    );
   }
 
   Future<void> _loadUserData() async {
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = await AuthService().getUserData();
     setState(() {
-      _userName = prefs.getString('userName') ?? _userName;
-      _userId = prefs.getString('userId') ?? _userId;
-      _profileImageUrl = prefs.getString('profileImageUrl') ?? _profileImageUrl;
+      _userName = prefs?['name'] ?? _userName;
+      _userEmail = prefs?['email'] ?? _userEmail;
+      _profileImageUrl = prefs?['image'] ?? _profileImageUrl;
     });
   }
 
@@ -61,7 +66,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
             ),
             _UserData(
               userName: _userName,
-              userId: _userId,
+              userEmail: _userEmail,
               profileImageUrl: _profileImageUrl,
             ),
             const ProfileHeaderOptions()
@@ -75,12 +80,12 @@ class _ProfileHeaderState extends State<ProfileHeader> {
 class _UserData extends StatelessWidget {
   const _UserData({
     required this.userName,
-    required this.userId,
+    required this.userEmail,
     required this.profileImageUrl,
   });
 
   final String userName;
-  final String userId;
+  final String userEmail;
   final String profileImageUrl;
 
   @override
@@ -88,6 +93,7 @@ class _UserData extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(AppDefaults.padding),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           const SizedBox(width: AppDefaults.padding),
           SizedBox(
@@ -101,23 +107,28 @@ class _UserData extends StatelessWidget {
             ),
           ),
           const SizedBox(width: AppDefaults.padding),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                userName,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold, color: Colors.white),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'ID: $userId',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge
-                    ?.copyWith(color: Colors.white),
-              ),
-            ],
+          Flexible(
+            child: Column(
+              // mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  userName,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold, color: Colors.white),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Email: $userEmail',
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge
+                      ?.copyWith(color: Colors.white),
+                ),
+              ],
+            ),
           )
         ],
       ),

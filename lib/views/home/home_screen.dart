@@ -65,6 +65,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
             ),
+            leading: IconButton(
+                onPressed: () async {
+                  await categoryController.fetchCategories();
+                  await productController.fetchProducts();
+                  await cartController.fetchCart();
+                },
+                icon: Icon(Icons.refresh)),
             actions: [
               Container(
                 decoration: BoxDecoration(

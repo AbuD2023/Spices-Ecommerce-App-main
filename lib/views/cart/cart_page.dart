@@ -14,10 +14,20 @@ class CartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(context, 'عربة التسوق',
-          showBackButton: true,
-          showSearchButton: false,
-          backgroundColor: const Color.fromARGB(255, 2, 191, 128)),
+      appBar: buildAppBar(
+        context,
+        'عربة التسوق',
+        showBackButton: true,
+        showSearchButton: false,
+        backgroundColor: const Color.fromARGB(255, 2, 191, 128),
+        actions: [
+          IconButton(
+              onPressed: () async {
+                await cartController.fetchCart();
+              },
+              icon: Icon(Icons.refresh))
+        ],
+      ),
       body: SafeArea(
         child: Obx(() {
           if (cartController.isLoading.value) {
